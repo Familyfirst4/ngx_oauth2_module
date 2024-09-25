@@ -1,3 +1,38 @@
+08/22/2024
+- change LICENSE to Apache 2.0
+- depend on liboauth2 >= 2.0.0
+- release 4.0.0
+
+06/24/2024
+- release 3.5.0; fixes https://github.com/OpenIDC/ngx_oauth2_module/security/advisories/GHSA-pvq3-8rvg-f36q
+
+06/20/2024
+- implement OAuth2Require with liboauth2_nginx >= 1.6.3
+- bump to 3.5.0dev
+
+06/18/2024
+- fix variable colision between requests; closes #8; see #7; thanks @smanolache
+
+06/05/2024
+- depend on liboauth2 >= 1.6.2
+- release 3.4.0
+
+06/02/2024
+- don't include standard headers before NGINX headers; see OpenIDC/ngx_sts_module#2
+  avoid compilation error with NGINX 1.26.0: field 'pkt6' has incomplete type
+
+03/08/2023
+- move repo to OpenIDC github organization
+
+12/06/2022
+- change Makefile install procedure
+- depend on liboauth 1.4.5.2
+- release 3.3.0
+
+07/27/2022
+- depend on liboauth2 1.4.5 with multi-treading fix for "OAuth2TokenVerify jwk <key>"
+- release 3.2.3
+
 06/07/2021
 - depend on liboauth2 1.4.2.1 with fixed iat slack validation defaults
 - release 3.2.1
