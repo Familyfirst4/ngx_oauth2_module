@@ -228,12 +228,14 @@ end:
 
 static ngx_int_t ngx_oauth2_handler(ngx_http_request_t *r)
 {
+	bool rc = false;
 	ngx_int_t rv = NGX_DECLINED;
 	oauth2_nginx_request_context_t *ctx = NULL;
 	ngx_oauth2_cfg_t *cfg = NULL;
 	ngx_str_t ngx_source_token;
 	char *source_token = NULL;
 	json_t *json_payload = NULL;
+	oauth2_http_status_code_t status_code = 0;
 
 	if (r != r->main)
 		// do not goto end because ctx->log is not available
@@ -286,9 +288,11 @@ static ngx_int_t ngx_oauth2_handler(ngx_http_request_t *r)
 	oauth2_debug(ctx->log, "enter: source_token=%s, initial_request=%d",
 		     source_token, (r != r->main));
 
-	if (oauth2_token_verify(ctx->log, ctx->request, cfg->verify,
-				source_token, &json_payload) == false) {
-		oauth2_warn(ctx->log, "Token could not be verified.");
+	rc = oauth2_token_verify(ctx->log, ctx->request, cfg->verify,
+				source_token, &json_payload, &status_code);
+
+	if (rc == false) {
+		oauth2_warn(ctx->log, "Token could not be verified [HTTP status code=%d].", (int)status_code);
 		rv = NGX_HTTP_UNAUTHORIZED;
 		goto end;
 	}
